@@ -8,7 +8,7 @@ const coverStyle = {
 	height: 193
 };
 
-const Book = ({ backgroundImage, bookTitle, bookAuthor }) => (
+const Book = ({ backgroundImage, bookTitle, bookAuthor, bookShelf }) => (
 	<div className="book">
 		<div className="book-top">
 			<div 
@@ -16,7 +16,7 @@ const Book = ({ backgroundImage, bookTitle, bookAuthor }) => (
 				style={Object.assign(coverStyle, {backgroundImage: `url(${backgroundImage})`})}>
 			</div>
 			<div className="book-shelf-changer">
-				<Select />
+				<Select shelf={bookShelf}/>
 			</div>
 		</div>
 		<div className="book-title">{bookTitle}</div>
@@ -27,7 +27,8 @@ const Book = ({ backgroundImage, bookTitle, bookAuthor }) => (
 Book.propTypes = {
 	backgroundImage: PropTypes.string.isRequired,
 	bookTitle: PropTypes.string.isRequired,
-	bookAuthor: PropTypes.string.isRequired
+	bookAuthor: PropTypes.string.isRequired,
+	bookShelf: PropTypes.string.isRequired
 };
 
 export { Book };

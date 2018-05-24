@@ -7,6 +7,7 @@ const ListBooks = ({ books }) => (
 		{books.map((book) => (
 			<li key={book.id}>
 				<Book
+					bookShelf={book.shelf}
 					backgroundImage={book.imageLinks.thumbnail}
 					bookTitle={book.title}
 					bookAuthor={book.authors[0]}
