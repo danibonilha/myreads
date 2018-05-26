@@ -2,7 +2,7 @@ import React from 'react';
 import '../scenes/App.css';
 
 
-const Select = (props) => (
+const SelectShelf = (props) => (
 	<select value={props.shelf}>
 		<option value="none" disabled>Move to...</option>
 		<option value="currentlyReading">Currently Reading</option>
@@ -12,4 +12,4 @@ const Select = (props) => (
 	</select>
 );
 
-export { Select };
+export { SelectShelf };

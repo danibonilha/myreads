@@ -1,6 +1,6 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import { Select } from './';
+import { SelectShelf } from './';
 import '../scenes/App.css';
 
 const coverStyle = {
@@ -16,7 +16,7 @@ const Book = ({ backgroundImage, bookTitle, bookAuthor, bookShelf }) => (
 				style={Object.assign(coverStyle, {backgroundImage: `url(${backgroundImage})`})}>
 			</div>
 			<div className="book-shelf-changer">
-				<Select shelf={bookShelf}/>
+				<SelectShelf shelf={bookShelf}/>
 			</div>
 		</div>
 		<div className="book-title">{bookTitle}</div>
