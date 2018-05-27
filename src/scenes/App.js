@@ -19,6 +19,10 @@ class BooksApp extends React.Component {
 		showSearchPage: false,
 		books: []
 	}
+	constructor() {
+		super();
+		this.onUpdateShelf = this.onUpdateShelf.bind(this);
+	}
 
 	componentDidMount() {
 		BooksAPI.getAll()
@@ -27,19 +31,42 @@ class BooksApp extends React.Component {
 	handleShelf(shelf) {
 		return this.state.books.filter((book) => book.shelf === shelf);
 	}
+
+	onUpdateShelf(book) {
+		BooksAPI.get(book).then((book) => {
+			this.setState((prevState) => ({
+				books: prevState.books.filter(
+					(prevBook) => prevBook.id !== book.id
+				).concat(book)
+			}));
+		});
+	}
 	render() {
 		return (
 			<div className="app">
 				{this.state.showSearchPage ? (
-					<SearchBooks />
+					<SearchBooks 
+						booksInShelfs={this.state.books} 
+						onUpdateShelf={this.onUpdateShelf}
+					/>
 				) : (
 					<div className="list-books">
 						<NavBar title="My Reads" />
 						<div className="list-books-content">
 							<div>
-								<BookShelf shelfTitle="Currently Reading" books={this.handleShelf(CURRENTLY_READING)} />
-								<BookShelf shelfTitle="Want to Read" books={this.handleShelf(WANT_TO_READ)} />
-								<BookShelf shelfTitle="Read" books={this.handleShelf(READ)} />
+								<BookShelf
+									shelfTitle="Currently Reading"
+									books={this.handleShelf(CURRENTLY_READING)}
+									onUpdateShelf={this.onUpdateShelf}
+								/>
+								<BookShelf
+									shelfTitle="Want to Read"
+									books={this.handleShelf(WANT_TO_READ)}
+									onUpdateShelf={this.onUpdateShelf} />
+								<BookShelf
+									shelfTitle="Read"
+									books={this.handleShelf(READ)}
+									onUpdateShelf={this.onUpdateShelf} />
 							</div>
 						</div>
 						<div className="open-search">

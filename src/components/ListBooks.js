@@ -2,23 +2,19 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import { Book } from './../components';
 
-const ListBooks = ({ books }) => (
+const ListBooks = ({ books, onUpdateShelf }) => (
 	<ol className="books-grid">
 		{books.map((book) => (
 			<li key={book.id}>
-				<Book
-					bookShelf={book.shelf}
-					backgroundImage={book.imageLinks.thumbnail}
-					bookTitle={book.title}
-					bookAuthor={book.authors[0]}
-				/>                 
+				<Book book={book}	onUpdateShelf={onUpdateShelf}/>           
 			</li>))
 		}
 	</ol>
 );
 
 ListBooks.propTypes = {
-	books: PropTypes.arrayOf(PropTypes.object)
+	books: PropTypes.arrayOf(PropTypes.object),
+	onUpdateShelf: PropTypes.func.isRequired
 };
 
 export { ListBooks };

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { SelectShelf } from './';
+import * as BooksAPI from './../services/BooksAPI';
 import '../scenes/App.css';
 
 const coverStyle = {
@@ -8,27 +9,57 @@ const coverStyle = {
 	height: 193
 };
 
-const Book = ({ backgroundImage, bookTitle, bookAuthor, bookShelf }) => (
-	<div className="book">
-		<div className="book-top">
-			<div 
-				className="book-cover" 
-				style={Object.assign(coverStyle, {backgroundImage: `url(${backgroundImage})`})}>
-			</div>
-			<div className="book-shelf-changer">
-				<SelectShelf shelf={bookShelf}/>
-			</div>
-		</div>
-		<div className="book-title">{bookTitle}</div>
-		<div className="book-authors">{bookAuthor}</div>
-	</div>
-);
+class Book extends Component {
+	static propTypes = {
+		book: PropTypes.object.isRequired,
+		onUpdateShelf: PropTypes.func.isRequired
+	};
 
-Book.propTypes = {
-	backgroundImage: PropTypes.string.isRequired,
-	bookTitle: PropTypes.string.isRequired,
-	bookAuthor: PropTypes.string.isRequired,
-	bookShelf: PropTypes.string.isRequired
-};
+	constructor(props) {
+		super(props);
+		this.changeShelf = this.changeShelf.bind(this);
+	}
+
+	state = {
+		book: this.props.book
+	};
+
+	changeShelf(shelf) {
+		BooksAPI.update(this.state.book, shelf)
+			.then(() => this.props.onUpdateShelf(this.state.book.id));
+	}
+
+	render() {
+		const { book } = this.state;
+		const backgroundImage = book.imageLinks ? 
+			book.imageLinks.thumbnail : require("../icons/no-cover.svg");
+		return (
+			<div className="book">
+				<div className="book-top">
+					<div
+						className="book-cover"
+						style={Object.assign(coverStyle,
+							{ backgroundImage: `url(${backgroundImage})` })
+						}>
+					</div>
+					<div className="book-shelf-changer">
+						<SelectShelf 
+							shelf={book.shelf} 
+							changeShelf={this.changeShelf} 
+						/>
+					</div>
+				</div>
+				{!!book.title &&
+					<div className="book-title">{book.title}</div>
+				}
+				{!!book.authors &&
+					<div className="book-authors">{book.authors[0]}</div>
+				}
+			</div>
+		);
+	}
+}
+
+
 
 export { Book };
