@@ -2,31 +2,51 @@ import React from 'react';
 import * as BooksAPI from '../services/BooksAPI';
 import './App.css';
 import { SearchBar, ListBooks } from './../components';
+import { PropTypes } from 'prop-types';
 
 
 class SearchBooks extends React.Component {
-	constructor(props){
-		super(props);
-		this.updateQuery = this.updateQuery.bind(this);
+	static propTypes = {
+		booksInShelfs: PropTypes.array.isRequired,
+		onUpdateShelf: PropTypes.func.isRequired
 	}
-	
 	state = {
 		query: '',
-		books: []
+		searchBooks: []
+	}
+	updateQuery = (query) => {
+		this.setState({ query: query.trim() });
+		if (query) {
+			BooksAPI.search(query).then((searchBooks) => {
+				if (searchBooks.length > 0) {
+					searchBooks.forEach((book) => {
+						const alreadyInShelfs = this.props.booksInShelfs.find(
+							(shelfsBooks) => shelfsBooks.id === book.id
+						);
+						if (alreadyInShelfs) {
+							book.shelf = alreadyInShelfs.shelf;
+						}
+					});
+					if (this.state.query) {
+						return this.setState({ searchBooks });
+					}
+				}
+			});
+		}
+		return this.setState({ searchBooks: [] });
 	}
 
-	updateQuery = (query) => {
-		this.setState({query: query.trim()});
-		BooksAPI.search(query).then((books) => this.setState({ books }));
-	}
 	render() {
 		return (
 			<div className="search-books">
-				<SearchBar 
+				<SearchBar
 					placeholder="Search by title or author"
 					updateQuery={this.updateQuery} />
 				<div className="search-books-results">
-					<ListBooks books={this.state.books}/>
+					<ListBooks 
+						books={this.state.searchBooks} 
+						onUpdateShelf={this.props.onUpdateShelf}
+					/>
 				</div>
 			</div>
 		);
