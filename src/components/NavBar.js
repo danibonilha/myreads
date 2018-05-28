@@ -1,6 +1,6 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import '../scenes/App.css';
+import '../styles/App.css';
 
 const NavBar = (props) => (
 	<div className="list-books-title">

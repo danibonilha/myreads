@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { SelectShelf } from './';
 import * as BooksAPI from './../services/BooksAPI';
-import '../scenes/App.css';
+import '../styles/App.css';
 
 const coverStyle = {
 	width: 128,

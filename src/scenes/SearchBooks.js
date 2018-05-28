@@ -1,6 +1,6 @@
 import React from 'react';
 import * as BooksAPI from '../services/BooksAPI';
-import './App.css';
+import '../styles/App.css';
 import { SearchBar, ListBooks } from './../components';
 import { PropTypes } from 'prop-types';
 

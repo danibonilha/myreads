@@ -2,7 +2,7 @@ import React from 'react';
 import * as BooksAPI from '../services/BooksAPI';
 import { NavBar, BookShelf } from './../components';
 import SearchBooks from './SearchBooks';
-import './App.css';
+import '../styles/App.css';
 
 const CURRENTLY_READING = 'currentlyReading';
 const WANT_TO_READ = 'wantToRead';
