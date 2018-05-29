@@ -1,5 +1,5 @@
 import React from 'react';
-import '../scenes/App.css';
+import '../styles/App.css';
 import { PropTypes } from 'prop-types';
 
 
