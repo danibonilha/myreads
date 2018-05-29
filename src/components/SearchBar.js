@@ -1,10 +1,11 @@
 import React from 'react';
-import '../scenes/App.css';
+import '../styles/App.css';
 import { PropTypes } from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const SearchBar = (props) => (
 	<div className="search-books-bar">
-		<a className="close-search" >Close</a>
+		<Link className="close-search" to="/"> Close</Link>
 		<div className="search-books-input-wrapper">
 			<input 
 				type="text" 

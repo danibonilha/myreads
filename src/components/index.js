@@ -5,3 +5,4 @@ export * from './SearchBar';
 export * from './BookShelf';
 export * from './BookShelfHeader';
 export * from './ListBooks';
+export * from './AddBook';
