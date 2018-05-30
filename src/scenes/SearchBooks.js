@@ -40,9 +40,7 @@ class SearchBooks extends React.Component {
 				}
 			});
 		}
-		else {
-			this.setState({ searchBooks: [] });
-		}
+		this.setState({ searchBooks: [] });
 	}
 
 	render() {
