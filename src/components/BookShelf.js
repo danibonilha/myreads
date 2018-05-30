@@ -6,14 +6,14 @@ import { BookShelfHeader, ListBooks } from './../components';
 
 const BookShelf = ({ shelfTitle, books, onUpdateShelf }) => (
 	<div className="bookshelf">
-		<BookShelfHeader title={shelfTitle}/>
+		<BookShelfHeader title={shelfTitle} />
 		<div className="bookshelf-books">
-			<ListBooks 
-				books={books} 
+			<ListBooks
+				books={books}
 				onUpdateShelf={onUpdateShelf}
 			/>
-		</div> 
-	</div>   
+		</div>
+	</div>
 );
 
 BookShelf.propTypes = {

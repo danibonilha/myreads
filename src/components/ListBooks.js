@@ -6,7 +6,7 @@ const ListBooks = ({ books, onUpdateShelf }) => (
 	<ol className="books-grid">
 		{books.map((book) => (
 			<li key={book.id}>
-				<Book book={book}	onUpdateShelf={onUpdateShelf}/>           
+				<Book book={book} onUpdateShelf={onUpdateShelf} />
 			</li>))
 		}
 	</ol>
