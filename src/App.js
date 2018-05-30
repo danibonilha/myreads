@@ -2,7 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import * as BooksAPI from './services/BooksAPI';
 import { NavBar, AddBook } from './components';
-import Shelfs from './scenes/Shelfs';
+import Shelves from './scenes/Shelves';
 import SearchBooks from './scenes/SearchBooks';
 import './styles/App.css';
 
@@ -16,38 +16,46 @@ class BooksApp extends React.Component {
 	}
 
 	componentDidMount() {
+		this.getBooks();
+	}
+
+	/**
+	* @description Fetches API to get all books and set state
+	*/
+	getBooks() {
 		BooksAPI.getAll()
 			.then((books) => this.setState({ books }));
 	}
 
-	onUpdateShelf(book) {
-		BooksAPI.get(book).then((book) => {
-			this.setState((prevState) => ({
-				books: prevState.books.filter(
-					(prevBook) => prevBook.id !== book.id
-				).concat(book)
-			}));
-		});
+	/**
+	* @description Updates shelf on backend and in the application
+	* @param {object} book - That should be updated
+	* @param {string} shelf - which shelf update to
+	*/
+	onUpdateShelf(book, shelf) {
+		BooksAPI.update(book, shelf)
+			.then(() => this.getBooks());
 	}
+
 	render() {
 		return (
 			<div className="app">
-				<Route path="/search"  render={() => (
-					<SearchBooks 
-						booksInShelfs={this.state.books} 
+				<Route path="/search" render={() => (
+					<SearchBooks
+						booksInShelves={this.state.books}
 						onUpdateShelf={this.onUpdateShelf}
 					/>
-				)}/>
+				)} />
 				<Route exact path="/" render={() => (
 					<div className="list-books">
 						<NavBar title="My Reads" />
-						<Shelfs 
-							books={this.state.books} 
+						<Shelves
+							books={this.state.books}
 							onUpdateShelf={this.onUpdateShelf}
 						/>
 						<AddBook />
 					</div>
-				)}/>
+				)} />
 			</div>
 		);
 	}

@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { PropTypes } from 'prop-types';
 import { SelectShelf } from './';
-import * as BooksAPI from './../services/BooksAPI';
 import '../styles/App.css';
 
 const coverStyle = {
@@ -9,57 +8,42 @@ const coverStyle = {
 	height: 193
 };
 
-class Book extends Component {
-	static propTypes = {
-		book: PropTypes.object.isRequired,
-		onUpdateShelf: PropTypes.func.isRequired
+const Book = ({ book, onUpdateShelf }) => {
+	const changeShelf = (shelf) => {
+		onUpdateShelf(book, shelf);
 	};
+	const backgroundImage = book.imageLinks ?
+		book.imageLinks.thumbnail : require('../icons/no-cover.svg');
 
-	constructor(props) {
-		super(props);
-		this.changeShelf = this.changeShelf.bind(this);
-	}
-
-	state = {
-		book: this.props.book
-	};
-
-	changeShelf(shelf) {
-		BooksAPI.update(this.state.book, shelf)
-			.then(() => this.props.onUpdateShelf(this.state.book.id));
-	}
-
-	render() {
-		const { book } = this.state;
-		const backgroundImage = book.imageLinks ? 
-			book.imageLinks.thumbnail : require("../icons/no-cover.svg");
-		return (
-			<div className="book">
-				<div className="book-top">
-					<div
-						className="book-cover"
-						style={Object.assign(coverStyle,
-							{ backgroundImage: `url(${backgroundImage})` })
-						}>
-					</div>
-					<div className="book-shelf-changer">
-						<SelectShelf 
-							shelf={book.shelf} 
-							changeShelf={this.changeShelf} 
-						/>
-					</div>
+	return (
+		<div className="book">
+			<div className="book-top">
+				<div
+					className="book-cover"
+					style={Object.assign(coverStyle,
+						{ backgroundImage: `url(${backgroundImage})` })
+					}>
 				</div>
-				{!!book.title &&
-					<div className="book-title">{book.title}</div>
-				}
-				{!!book.authors &&
-					<div className="book-authors">{book.authors[0]}</div>
-				}
+				<div className="book-shelf-changer">
+					<SelectShelf
+						shelf={book.shelf}
+						changeShelf={changeShelf}
+					/>
+				</div>
 			</div>
-		);
-	}
-}
+			{!!book.title &&
+				<div className="book-title">{book.title}</div>
+			}
+			{!!book.authors &&
+				<div className="book-authors">{book.authors[0]}</div>
+			}
+		</div>
+	);
+};
 
-
+Book.propTypes = {
+	book: PropTypes.object.isRequired,
+	onUpdateShelf: PropTypes.func.isRequired
+};
 
 export { Book };
