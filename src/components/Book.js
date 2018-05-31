@@ -3,26 +3,26 @@ import { PropTypes } from 'prop-types';
 import { SelectShelf } from './';
 import '../styles/App.css';
 
-const coverStyle = {
-	width: 128,
-	height: 193
-};
+
 
 const Book = ({ book, onUpdateShelf }) => {
+	const coverStyle = {
+		width: 128,
+		height: 193,
+		backgroundImage: `url(${book.imageLinks ?
+			book.imageLinks.thumbnail : require('../icons/no-cover.svg')})`
+	};
+
 	const changeShelf = (shelf) => {
 		onUpdateShelf(book, shelf);
 	};
-	const backgroundImage = book.imageLinks ?
-		book.imageLinks.thumbnail : require('../icons/no-cover.svg');
 
 	return (
 		<div className="book">
 			<div className="book-top">
 				<div
 					className="book-cover"
-					style={Object.assign(coverStyle,
-						{ backgroundImage: `url(${backgroundImage})` })
-					}>
+					style={coverStyle}>
 				</div>
 				<div className="book-shelf-changer">
 					<SelectShelf
