@@ -3,7 +3,8 @@
     "prop-types": "^15.6.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
-    "react-router-dom": "^4.2.2"
+    "react-router-dom": "^4.2.2",
+    "semantic-ui-react": "^0.80.2"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.3",
