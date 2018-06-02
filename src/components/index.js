@@ -6,3 +6,5 @@ export * from './BookShelf';
 export * from './BookShelfHeader';
 export * from './ListBooks';
 export * from './AddBook';
+export * from './BookCover';
+export * from './BookInfo';
