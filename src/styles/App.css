@@ -5,7 +5,9 @@ body {
   line-height: 1.5;
 }
 body, .app {
-  background: white;
+  background-image: url('../assets/retina_wood.png');
+  perspective: 1800px;
+  perspective-origin: left center;
 }
 
 /* main page */
@@ -74,6 +76,7 @@ body, .app {
 }
 .search-books-input-wrapper {
   flex: 1;
+  background: white
 }
 .search-books-bar input {
   width: 100%;
@@ -114,6 +117,8 @@ body, .app {
 }
 .books-grid li {
   padding: 15px 15px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 .book {
   width: 128px;
@@ -126,6 +131,7 @@ body, .app {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background:whitesmoke;
 }
 .book-title,
 .book-authors {
