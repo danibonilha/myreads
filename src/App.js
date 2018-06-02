@@ -33,8 +33,15 @@ class BooksApp extends React.Component {
 	* @param {string} shelf - which shelf update to
 	*/
 	onUpdateShelf(book, shelf) {
+		book.shelf = shelf;
 		BooksAPI.update(book, shelf)
-			.then(() => this.getBooks());
+			.then(this.setState((prevState) => (
+				{
+					books: prevState.books.filter(
+						(prevState) => prevState.id !== book.id
+					).concat(book)
+				}
+			)));
 	}
 
 	render() {
