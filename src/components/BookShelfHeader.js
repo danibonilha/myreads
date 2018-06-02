@@ -4,7 +4,9 @@ import '../styles/App.css';
 
 
 const BookShelfHeader = (props) => (
-	<h2 className="bookshelf-title">{props.title}</h2>
+	<div className="bookshelf-title-container">
+		<h2 className="bookshelf-title">{props.title}</h2>
+	</div>
 );
 
 BookShelfHeader.propTypes = {
