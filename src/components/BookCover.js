@@ -10,7 +10,7 @@ class BookCover extends Component {
 		children: PropTypes.element
 	};
 
-	state = {}
+	state = { active: false }
 
 	handleShow = () => this.setState({ active: true })
 	handleHide = () => this.setState({ active: false })

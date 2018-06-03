@@ -8,3 +8,4 @@ export * from './ListBooks';
 export * from './AddBook';
 export * from './BookCover';
 export * from './BookInfo';
+export * from './DescriptionModal';
