@@ -1,8 +1,10 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
+import { debounce } from 'throttle-debounce';
 import { SearchBar, ListBooks } from './../components';
 import * as BooksAPI from '../services/BooksAPI';
 import '../styles/App.css';
+
 
 
 
@@ -10,6 +12,10 @@ class SearchBooks extends React.Component {
 	static propTypes = {
 		booksInShelves: PropTypes.array.isRequired,
 		onUpdateShelf: PropTypes.func.isRequired
+	}
+	constructor(props){
+		super(props);
+		this.updateQuery = debounce(250, this.updateQuery);
 	}
 	state = {
 		query: '',
@@ -19,7 +25,7 @@ class SearchBooks extends React.Component {
 	* @description Updates query while typing and 
 	* searches for books that matches it, keeping shelves
 	* of already added books.
-	* @param {srting} query - To search for
+	* @param {string} query - To search for
 	*/
 	updateQuery = (query) => {
 		this.setState({ query: query.trim() });
