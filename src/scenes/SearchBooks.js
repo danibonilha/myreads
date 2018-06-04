@@ -66,6 +66,7 @@ class SearchBooks extends React.Component {
 				{this.state.notFound &&
 					<img className="book-not-found"
 						src={require('../assets/book-not-found.png')}
+						alt="Book not found"
 					/>}
 			</div>
 		);
