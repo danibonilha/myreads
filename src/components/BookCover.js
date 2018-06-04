@@ -23,7 +23,7 @@ class BookCover extends Component {
 			width: 128,
 			height: 183,
 			backgroundImage: `url(${book.imageLinks ?
-				book.imageLinks.thumbnail : require('../icons/no-cover.svg')})`,
+				book.imageLinks.thumbnail : require('../assets/no-cover.png')})`,
 		};
 		return (
 			<div className="book-top">
