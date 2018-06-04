@@ -5,21 +5,19 @@ import { SearchBar, ListBooks } from './../components';
 import * as BooksAPI from '../services/BooksAPI';
 import '../styles/App.css';
 
-
-
-
 class SearchBooks extends React.Component {
 	static propTypes = {
 		booksInShelves: PropTypes.array.isRequired,
 		onUpdateShelf: PropTypes.func.isRequired
 	}
-	constructor(props){
+	constructor(props) {
 		super(props);
 		this.updateQuery = debounce(250, this.updateQuery);
 	}
 	state = {
 		query: '',
-		searchBooks: []
+		searchBooks: [],
+		notFound: false
 	}
 	/**
 	* @description Updates query while typing and 
@@ -41,12 +39,15 @@ class SearchBooks extends React.Component {
 						}
 					});
 					if (this.state.query) {
-						this.setState({ searchBooks });
+						this.setState({ searchBooks, notFound: false });
 					}
 				}
-			});
+				else {
+					this.setState({ notFound: true });
+				}
+			}).catch(() => this.setState({ notFound: true }));
 		}
-		this.setState({ searchBooks: [] });
+		this.setState({ searchBooks: [], notFound: false });
 	}
 
 	render() {
@@ -55,12 +56,17 @@ class SearchBooks extends React.Component {
 				<SearchBar
 					placeholder="Search by title or author"
 					updateQuery={this.updateQuery} />
-				<div className="search-books-results">
-					<ListBooks
-						books={this.state.searchBooks}
-						onUpdateShelf={this.props.onUpdateShelf}
-					/>
-				</div>
+				{!this.state.notFound &&
+					<div className="search-books-results">
+						<ListBooks
+							books={this.state.searchBooks}
+							onUpdateShelf={this.props.onUpdateShelf}
+						/>
+					</div>}
+				{this.state.notFound &&
+					<img className="book-not-found"
+						src={require('../assets/book-not-found.png')}
+					/>}
 			</div>
 		);
 	}
