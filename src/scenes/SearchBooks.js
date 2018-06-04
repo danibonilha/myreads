@@ -38,16 +38,16 @@ class SearchBooks extends React.Component {
 							book.shelf = alreadyInShelves.shelf;
 						}
 					});
-					if (this.state.query) {
-						this.setState({ searchBooks, notFound: false });
-					}
+					this.setState({ searchBooks, notFound: false });
 				}
 				else {
-					this.setState({ notFound: true });
+					this.setState({ searchBooks: [], notFound: true });
 				}
-			}).catch(() => this.setState({ notFound: true }));
+			}).catch(() => this.setState({ searchBooks: [], notFound: true }));
 		}
-		this.setState({ searchBooks: [], notFound: false });
+		else {
+			this.setState({ searchBooks: [], notFound: false });
+		}
 	}
 
 	render() {
