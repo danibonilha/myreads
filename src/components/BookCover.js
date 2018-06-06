@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import '../styles/App.css';
 import { Dimmer, Image } from 'semantic-ui-react';
+import { isMobile } from 'react-device-detect';
 
 
 class BookCover extends Component {
@@ -12,8 +13,21 @@ class BookCover extends Component {
 
 	state = { active: false }
 
-	handleShow = () => this.setState({ active: true })
-	handleHide = () => this.setState({ active: false })
+	handleShow = () => {
+		if (!isMobile) {
+			this.setState({ active: true });
+		}
+	}
+	handleHide = () => {
+		if (!isMobile) {
+			this.setState({ active: false });
+		}
+	}
+	handleClick = () => {
+		if (isMobile) {
+			this.setState({ active: !this.state.active });
+		}
+	}
 
 	render() {
 		const { book, children } = this.props;
@@ -31,6 +45,7 @@ class BookCover extends Component {
 					as={Image}
 					dimmed={active}
 					dimmer={{ active, content: children }}
+					onClick={this.handleClick}
 					onMouseEnter={this.handleShow}
 					onMouseLeave={this.handleHide}
 					style={coverStyle}
