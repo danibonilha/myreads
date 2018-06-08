@@ -19,35 +19,37 @@ class SearchBooks extends React.Component {
 		searchBooks: [],
 		notFound: false
 	}
+
+	/**
+	* @description Updates shelves of searchedBooks
+	* if books are already in shelves
+	* @param {object} books - books from search
+	* @param {object} booksInShelves - books currently on shelves
+	*/
+	updateShelves = (books, booksInShelves) => {
+		return books.map(book => {
+			const existingBook = booksInShelves.find(b => b.id === book.id);
+			return existingBook ? existingBook : book;
+		});
+	};
+
 	/**
 	* @description Updates query while typing and 
-	* searches for books that matches it, keeping shelves
-	* of already added books.
+	* searches for books that matches it
 	* @param {string} query - To search for
 	*/
 	updateQuery = (query) => {
 		this.setState({ query: query.trim() });
-		if (query) {
-			BooksAPI.search(query).then((searchBooks) => {
-				if (searchBooks.length > 0) {
-					searchBooks.forEach((book) => {
-						const alreadyInShelves = this.props.booksInShelves.find(
-							(shelvesBooks) => shelvesBooks.id === book.id
-						);
-						if (alreadyInShelves) {
-							book.shelf = alreadyInShelves.shelf;
-						}
-					});
-					this.setState({ searchBooks, notFound: false });
-				}
-				else {
-					this.setState({ searchBooks: [], notFound: true });
-				}
-			}).catch(() => this.setState({ searchBooks: [], notFound: true }));
-		}
-		else {
+		if (!query) {
 			this.setState({ searchBooks: [], notFound: false });
+			return;
 		}
+		BooksAPI.search(query)
+			.then(books => {
+				const searchBooks = this.updateShelves(books, this.props.booksInShelves);
+				this.setState({ searchBooks, notFound: false });
+			})
+			.catch(() => this.setState({ searchBooks: [], notFound: true }));
 	}
 
 	render() {
